@@ -49,8 +49,7 @@ namespace MVerses
         public static void StoreVerse()
         {
             string storeString = Global.book + "@" + Global.chnum + "@" + Global.vnum + "@" + Global.verse + "*";
-            string file = "VStorage.txt";
-            StreamWriter writer = new StreamWriter(file,true);
+            StreamWriter writer = new StreamWriter(Global.file,true);
             writer.Write(storeString);
             writer.Close();
             Console.WriteLine("Verse added to library.");
