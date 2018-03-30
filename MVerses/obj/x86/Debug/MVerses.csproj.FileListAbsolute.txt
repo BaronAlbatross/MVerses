@@ -1,0 +1,5 @@
+/home/baronalbatross/Projects/MVerses/MVerses/obj/x86/Debug/MVerses.csproj.CoreCompileInputs.cache
+/home/baronalbatross/Projects/MVerses/MVerses/bin/Debug/MVerses.exe
+/home/baronalbatross/Projects/MVerses/MVerses/bin/Debug/MVerses.pdb
+/home/baronalbatross/Projects/MVerses/MVerses/obj/x86/Debug/MVerses.exe
+/home/baronalbatross/Projects/MVerses/MVerses/obj/x86/Debug/MVerses.pdb
