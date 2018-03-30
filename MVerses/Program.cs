@@ -2,6 +2,15 @@
 
 namespace MVerses
 {
+
+    class Global
+    {
+        public static string book;
+        public static string chnum;
+        public static string vnum;
+        public static string verse;
+    }
+
     class MainClass
     {
         public static void Main(string[] args)
@@ -35,7 +44,7 @@ namespace MVerses
                     if (menu == "E" || menu == "e")
                     {
                         //run view methods
-                        Console.WriteLine("Enter New");
+                        Enter.EnterVerse();
                     }
                     //Select Quit
                     if (menu == "Q" || menu == "q")
@@ -45,12 +54,8 @@ namespace MVerses
                         break;
                     }
                     continue;
-
                 }
-
-
                 continue;
-
             }
         }
     }
