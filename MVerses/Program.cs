@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace MVerses
 {
@@ -10,8 +12,9 @@ namespace MVerses
         public static string vnum;
         public static string verse;
         public static string file = "VStorage.txt";
-        public static string[,] vLib;
         public static int load = 0;
+        public static List<string> vLib = new List<string>();
+
     }
 
     class MainClass
