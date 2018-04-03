@@ -1,11 +1,27 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace MVerses
 {
+
+    class Global
+    {
+        public static string book;
+        public static string chnum;
+        public static string vnum;
+        public static string verse;
+        public static string file = "VStorage.txt";
+        public static int load = 0;
+        public static List<string> vLib = new List<string>();
+
+    }
+
     class MainClass
     {
         public static void Main(string[] args)
         {
+            View.SetVerseLib();
             bool run = true;
             while (run == true)
             {
@@ -23,7 +39,7 @@ namespace MVerses
                     if (menu == "V" || menu == "v")
                     {
                         //run view methods
-                        Console.WriteLine("View");
+                        View.ViewMenu();
                     }
                     //Select Practice Recall
                     if (menu == "P" || menu == "p")
@@ -35,7 +51,7 @@ namespace MVerses
                     if (menu == "E" || menu == "e")
                     {
                         //run view methods
-                        Console.WriteLine("Enter New");
+                        Enter.EnterVerse();
                     }
                     //Select Quit
                     if (menu == "Q" || menu == "q")
@@ -45,12 +61,8 @@ namespace MVerses
                         break;
                     }
                     continue;
-
                 }
-
-
                 continue;
-
             }
         }
     }
