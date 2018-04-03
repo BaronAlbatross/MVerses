@@ -1,13 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace MVerses
 {
     public class View
     {
 
-
+        public static bool subRun;
 
         public static void ViewMenu()
         {
@@ -28,7 +29,7 @@ namespace MVerses
 
                     if (menu == "V" || menu == "v")
                     {
-                        bool subRun = true;
+                        subRun = true;
                         while (subRun == true)
                         {
                             //Display Verse
@@ -37,6 +38,8 @@ namespace MVerses
                             {
                                 LoadVerse();
                                 Display();
+                                menu = "z";
+                                break;
                             }
                         }
 
@@ -44,6 +47,7 @@ namespace MVerses
                     if (menu == "A" || menu == "a")
                     {
                         //Display All
+                        Console.WriteLine("\nAll Verses\n");
                         int x = 0;
                         for (x = 0; x < (Global.vLib.Count -1); x++)
                         {
@@ -51,18 +55,21 @@ namespace MVerses
                             LoadVerse();
                             Console.WriteLine("{0} {1}:{2}", Global.book, Global.chnum, Global.vnum);
                         }
+                        Console.WriteLine("\n\n");
 
 
                     }
                     if (menu == "B" || menu == "b")
                     {
                         //Search by Book
+                        searchBook();
 
 
                     }
                     if (menu == "W" || menu == "w")
                     {
                         //Search by Words
+                        searchWord();
 
 
                     }
@@ -76,6 +83,62 @@ namespace MVerses
             }
         }
 
+        public static void searchWord()
+        {
+            string wSearch;
+            bool found = false;
+            Console.WriteLine("\nPlease enter the word or phrase you would like to search for");
+            wSearch = Console.ReadLine();
+
+            Console.WriteLine("\nVerses containing \"{0}\"\n", wSearch);
+            int x = 0;
+            for (x = 0; x < (Global.vLib.Count - 1); x++)
+            {
+                string[] vBroken = Global.vLib[x].Split('@');
+                if(vBroken[3].Contains(wSearch))
+                {
+                    Global.load = x;
+                    LoadVerse();
+                    Console.WriteLine("{0} {1}:{2}", Global.book, Global.chnum, Global.vnum);
+                    found = true;
+                }
+
+            }
+            if (found == false)
+            {
+                Console.WriteLine("No verses found containing \"{0}\"", wSearch);
+            }
+            Console.WriteLine("\n\n");
+        }
+
+        public static void searchBook()
+        {
+            string bSearch;
+            bool found = false;
+            Console.WriteLine("\nPlease enter the name of the book you would like to search in");
+            bSearch = Console.ReadLine();
+
+            Console.WriteLine("\nVerses from {0}\n", bSearch);
+            int x = 0;
+            for (x = 0; x < (Global.vLib.Count - 1); x++)
+            {
+                string[] vBroken = Global.vLib[x].Split('@');
+                if (bSearch == vBroken[0])
+                {
+                    Global.load = x;
+                    LoadVerse();
+                    Console.WriteLine("{0} {1}:{2}", Global.book, Global.chnum, Global.vnum);
+                    found = true;
+
+                }
+            }
+            if (found == false)
+            {
+                Console.WriteLine("No verses found in {0}", bSearch);
+            }
+            Console.WriteLine("\n\n");
+        }
+
         public static void Display()
         {
             //Displays the verse that is stored in the global variables
@@ -83,6 +146,7 @@ namespace MVerses
             Console.WriteLine("{0} {1}:{2}", Global.book, Global.chnum, Global.vnum);
             Console.WriteLine("\n{0}\n", Global.verse);
             Console.WriteLine("{0} {1}:{2}", Global.book, Global.chnum, Global.vnum);
+            Console.WriteLine("\n\n");
 
         }
 
@@ -104,29 +168,44 @@ namespace MVerses
         public static void FindVerse()
         {
             bool attempt = true;
-            while (attempt = true)
+            bool found = false;
+            while (attempt == true)
             {
-                Console.WriteLine("Enter the Verse in this format, [Book] [Chapter #]:[Verse #]");
+                Console.WriteLine("Enter the Verse in this format, [Book] [Chapter #]:[Verse #] or [Q]uit");
                 string v2Find = Console.ReadLine();
-                //query for the book by splitting it
 
-                /*split v2Find into array Find {Book, Chapter, Verse}
-                 * for each subarray in Global.vLiv check for match and pull index # of sub array
-                 * store subarray # in Global.load
-                 */
-                string[] find1 = v2Find.Split(' ');
-                string[] find2 = find1[1].Split(':');
-                string[] find3 = { find1[0], find2[0], find2[1] };
-                //Console.WriteLine(find3[0] + " " + find3[1] + ":" + find3[2]);
-                int x = 0;
-                for (x = 0; x < (Global.vLib.Count - 1); x++)
+                if (v2Find != "Q" || v2Find != "q")
                 {
-                    string[] vBroken = Global.vLib[Global.load].Split('@');
-                    if (find3[0] == vBroken[0] && find3[1] == vBroken[1] && find3[2] == vBroken[2])
+                    //query for the book by splitting it
+                    /*split v2Find into array Find {Book, Chapter, Verse}
+                     * for each subarray in Global.vLiv check for match and pull index # of sub array
+                     * store subarray # in Global.load
+                     */
+                    string[] find1 = v2Find.Split(' ');
+                    string[] find2 = find1[1].Split(':');
+                    string[] find3 = { find1[0], find2[0], find2[1] };
+                    //Console.WriteLine(find3[0] + " " + find3[1] + ":" + find3[2]);
+                    int x = 0;
+                    for (x = 0; x < (Global.vLib.Count -1); x++)
                     {
-                        Global.load = x;
-                        break;
+                        string[] vBroken = Global.vLib[x].Split('@');
+                        if (find3[0] == vBroken[0] && find3[1] == vBroken[1] && find3[2] == vBroken[2])
+                        {
+                            Global.load = (x);
+                            found = true;
+                            attempt = false;
+                            break;
+                        }
                     }
+                    if (found != true)
+                    {
+                        Console.WriteLine("Verse Not Found");
+                    }
+                }
+                else
+                {
+                    subRun = false;
+                    attempt = false;
                 }
             }
         }
