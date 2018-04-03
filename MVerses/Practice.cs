@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+
 namespace MVerses
 {
     public class Practice
@@ -6,7 +10,6 @@ namespace MVerses
         public static void PracticeMenu()
         {
             View.SetVerseLib();
-            Random rand = new Random();
             bool run = true;
             while (run == true)
             {
@@ -25,12 +28,23 @@ namespace MVerses
                     {
                         View.FindVerse();
                         View.LoadVerse();
+                        Test();
+
 
                     }
                     //Select Enter New Verse
                     if (menu == "S" || menu == "s")
                     {
-                        
+                        Global.shuffleTracker.Clear();
+                        while ((Global.shuffleTracker.Count) < (Global.vLib.Count - 1))
+                        {
+                            Console.WriteLine("Shuffling...");
+                            Shuffle();
+                            View.LoadVerse();
+                            Console.WriteLine("{0} out of {1}", Global.shuffleTracker.Count, (Global.vLib.Count - 1));
+                            Test();
+                        }
+
                     }
                     //Select Quit
                     if (menu == "R" || menu == "r")
@@ -43,11 +57,30 @@ namespace MVerses
                 continue;
             }
         }
+      public static void Shuffle()
+        {
+            Random rand = new Random();
+            bool confUntested = false;
+
+            while (confUntested == false)
+            {
+                int shuf = (rand.Next(0, (Global.vLib.Count - 1)));
+                bool testShuf = Global.shuffleTracker.Contains(shuf);
+                if (testShuf == false)
+                {
+                    Global.load = shuf;
+                    Global.shuffleTracker.Add(shuf);
+                    confUntested = true;
+                }
+            }
+        }
+
         public static void Test()
         {
             string retry = "a";
+            bool testing = true;
 
-            while (retry != "N" && retry != "n")
+            while (testing == true)
             {
                 Console.WriteLine("\n\n");
                 Console.WriteLine("Please Enter {0} {1}:{2}\n", Global.book, Global.chnum, Global.vnum);
@@ -57,7 +90,9 @@ namespace MVerses
                 if (practice == Global.verse)
                 {
                     Console.WriteLine("Correct!");
+                    testing = false;
                     break;
+
                 }
                 if (practice != Global.verse)
                 {
@@ -65,13 +100,20 @@ namespace MVerses
                     {
                         Console.WriteLine("Incorrect. Retry? (Y/N)");
                         retry = Console.ReadLine();
-                        continue;
+                        if (retry == "Y" || retry == "y")
+                        {
+                            retry = "a";
+                            break;
+                        }
+                        if (retry == "N" || retry == "n")
+                        {
+                            testing = false;
+                            break;
+                        }
                     }
 
                 }
             }
-
         }
-
     }
 }
