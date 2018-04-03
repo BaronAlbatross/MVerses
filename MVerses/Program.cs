@@ -14,6 +14,7 @@ namespace MVerses
         public static string file = "VStorage.txt";
         public static int load = 0;
         public static List<string> vLib = new List<string>();
+        public static List<int> shuffleTracker = new List<int>();
 
     }
 
@@ -45,7 +46,7 @@ namespace MVerses
                     if (menu == "P" || menu == "p")
                     {
                         //run view methods
-                        Console.WriteLine("Practice");
+                        Practice.PracticeMenu();
                     }
                     //Select Enter New Verse
                     if (menu == "E" || menu == "e")
