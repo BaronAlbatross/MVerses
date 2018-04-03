@@ -30,6 +30,7 @@ namespace MVerses
                         View.LoadVerse();
                         Test();
 
+
                     }
                     //Select Enter New Verse
                     if (menu == "S" || menu == "s")
@@ -56,8 +57,7 @@ namespace MVerses
                 continue;
             }
         }
-
-        public static void Shuffle()
+      public static void Shuffle()
         {
             Random rand = new Random();
             bool confUntested = false;
@@ -114,8 +114,6 @@ namespace MVerses
 
                 }
             }
-
         }
-
     }
 }
